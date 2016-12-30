@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/media/css/style.css">
+    <title>{% block titke %}My blog About Developing{% endblock %}</title>
+</head>
+<body>
+<header>Developing Skills</header>
+    <nav>
+        {% block nav %}
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/contact/"></a>Contact</li>
+        </ul>
+        {% endblock %}
+    </nav>
+    <section id="content">
+        {% block content %}{% endblock %}
+    </section>
+<footer>&copy; Developing Skills</footer>
+</body>
+</html>
