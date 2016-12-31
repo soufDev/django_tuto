@@ -1,0 +1,12 @@
+<h1>
+    {{ article.title }}
+    <span class="small">
+        in {{ article.category.name }}
+    </span>
+</h1>
+<p class="infos">
+    Edited By {{ article.author }}, at {{ article.date|date:"DATE_FORMAT" }}
+</p>
+<div class="content">
+    {{ article.content|linebreaks }}
+</div>

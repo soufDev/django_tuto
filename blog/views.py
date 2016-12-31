@@ -2,17 +2,10 @@
 
 from datetime import datetime
 from django.http import HttpResponse, Http404
-from django.shortcuts import redirect, render
-
+from django.shortcuts import redirect, render, get_object_or_404
 
 # Create your views here.
-
-
-def home(request):
-    """Html page example, not valid for the example to be concise"""
-    text = """<h1>Welcome to my blog !!</h1>
-                <p>Les crêpes bretonnes ça tue des mouettes en plein vol !</p>"""
-    return HttpResponse(text)
+from blog.models import Article
 
 
 def view_article(request, id_article):
@@ -47,3 +40,14 @@ def addition(request, number1, number2):
     total = int(number1) + int(number2)
     return render(request, 'blog/addition.html', locals())
 
+
+def home(request):
+    """View all article from our blog"""
+    articles = Article.objects.all()
+    return render(request, 'blog/home.html', {'last_articles': articles})
+
+
+def read(request, id):
+    """View a complete article"""
+    article = get_object_or_404(Article, id=id)
+    return render(request, 'blog/read.html', {'article': article})
