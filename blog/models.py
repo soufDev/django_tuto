@@ -3,27 +3,24 @@ from django.db import models
 # Create your models here.
 
 
-class Article(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.CharField(max_length=42)
-    content = models.TextField(null=True)
-    date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name="release_date")
-    category = models.ForeignKey('Category')
-
-    def __str__(self):
-        """
-        this method that you define on the models,
-        will allow us to recognize easily the different
-        objects that we will treat on the admin panel
-        """
-        return self.title
-
-
 class Category(models.Model):
     name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.name
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=42)
+    slug = models.SlugField(max_length=100)
+    content = models.TextField()
+    date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name='Release Date')
+
+    category = models.ForeignKey(Category)
+
+    def __unicode__(self):
+        return self.title
 
 
 class Motor(models.Model):
