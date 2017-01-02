@@ -3,6 +3,7 @@
 from datetime import datetime
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render, get_object_or_404
+from .forms import ContactForm
 
 # Create your views here.
 from blog.models import Article
@@ -11,7 +12,7 @@ from blog.models import Article
 def view_article(request, id_article):
     """
     seeing that it displays an article according to its identifier(where id, here is a numbe
-    it id it's the second function parametre ( the first one is always the user request
+    it id it's the second function parameter ( the first one is always the user request
     """
     if int(id_article) > 100:
         raise Http404
@@ -47,7 +48,30 @@ def home(request):
     return render(request, 'blog/home.html', {'last_articles': articles})
 
 
-def read(request, id):
+def read(request, article_id):
     """View a complete article"""
-    article = get_object_or_404(Article, id=id)
+    article = get_object_or_404(Article, id=article_id)
     return render(request, 'blog/read.html', {'article': article})
+
+
+def contact(request):
+    # build the form, either with the data posted
+    # either empty, if the user accessed, for the first time to the page
+    form = ContactForm(request.POST or None)
+    # you verify that the data sent is valid
+    # this method return false if there is no data
+    # in the form or that contains errors
+    if form.is_valid():
+        # here you can treat the form data
+        subject = form.cleaned_data['subject']
+        message = form.cleaned_data['message']
+        sender = form.cleaned_data['sender']
+        renvoi = form.cleaned_data['renvoi']
+
+        # here you could send an email with the data
+        # that you have recovred
+        send = True
+
+    # whatever happens, the form page is displayed
+    return render(request, 'blog/contact.html', locals())
+

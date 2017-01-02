@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^article/(\d+)$', views.read, name='read'),
+    url(r'^contact/$', views.contact, name='contact'),
 
     #url(r'^article/(?P<id_article>\d+)$', views.view_article),
     #url(r'^articles/(?P<year>\d{4})/(?P<month>\d{2})$', views.articles_list),
