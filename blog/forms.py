@@ -26,3 +26,10 @@ class ArticleForm(forms.ModelForm):
         fields = '__all__'
 
 
+class NewContactForm(forms.Form):
+    name = forms.CharField()
+    address = forms.CharField(widget=forms.Textarea)
+    photo = forms.ImageField()
+
+
+

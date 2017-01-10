@@ -3,10 +3,12 @@
 from datetime import datetime
 from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render, get_object_or_404
+
+from blog.forms import NewContactForm
 from .forms import ContactForm
 
 # Create your views here.
-from blog.models import Article
+from blog.models import Article, Contact
 
 
 def view_article(request, id_article):
@@ -74,4 +76,26 @@ def contact(request):
 
     # whatever happens, the form page is displayed
     return render(request, 'blog/contact.html', locals())
+
+
+def new_contact(request):
+    saving = False
+    form = NewContactForm(request.POST or None, request.FILES)
+    if form.is_valid():
+        contact = Contact()
+        contact.name = form.cleaned_data["name"]
+        contact.address = form.cleaned_data["address"]
+        contact.photo = form.cleaned_data["photo"]
+        contact.save()
+        saving = True
+
+    return render(request, 'blog/new_contact.html', {
+        'form': form,
+        'saving': saving
+    })
+
+
+def show_contacts(request):
+    contacts = Contact.objects.all()
+    return render(request, 'blog/show_contacts.html', {'contacts': contacts})
 

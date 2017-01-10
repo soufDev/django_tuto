@@ -1,0 +1,13 @@
+<h1>Add a new Contact</h1>
+
+{% if saving %}
+    <p>This Contact has been saved</p>
+{% endif %}
+
+
+<form method="post" enctype="multipart/form-data" action=".">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+

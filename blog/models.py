@@ -1,3 +1,4 @@
+import os
 from django.db import models
 
 # Create your models here.
@@ -53,6 +54,12 @@ class Seller(models.Model):
         return self.name
 
 
+def renaming(instance, name):
+    file_name = os.path.splitext(name)[0]
+    print(instance, name)
+    return "photos/{}-{}.jpg".format(instance.id, file_name)
+
+
 class Offer(models.Model):
     price = models.IntegerField()
     product = models.ForeignKey(Product)
@@ -60,5 +67,15 @@ class Offer(models.Model):
 
     def __str__(self):
         return "{0} sold by {1}".format(self.product, self.seller)
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+    photo = models.ImageField(upload_to=renaming, verbose_name="Document")
+
+    def __str__(self):
+        return self.name
+
 
 
